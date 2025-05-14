@@ -30,6 +30,16 @@ _my_custom_pwd() {
   echo -n "${prefix}${short_path}"
 }
 
+#Gets the OS type
+_get_system_icon() {
+  case "$OSTYPE" in
+    darwin*)  echo "" ;; # macOS icon
+    linux*)   echo "" ;; # Linux icon
+    msys*|cygwin*|mingw*) echo "" ;; # Windows icon
+    *)        echo "" ;; # Unknown system
+  esac
+}
+
 # --- Git Prompt Configuration ---
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}:(%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[blue]%})%{$reset_color%} "
@@ -108,7 +118,7 @@ _my_build_git_prompt_segment() {
 # --- Prompt Definition ---
 
 # Part 1: Static conditional status (Double quotes OK)
-PROMPT="%(?:%{$fg_bold[green]%}%1{%} :%{$fg_bold[red]%}%1{%} )"
+PROMPT="%(?:%{$fg_bold[green]%}%1{$(_get_system_icon)%} :%{$fg_bold[red]%}%1{$(_get_system_icon)%} )"
 
 # Part 2: Dynamic path (Use SINGLE quotes for PROMPT+=)
 # Note the space before %{fg...
